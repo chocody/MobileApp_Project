@@ -1,3 +1,4 @@
+import 'package:demo/widget.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -18,21 +19,21 @@ class MyApp extends StatelessWidget {
             seedColor: const Color.fromRGBO(164, 151, 134, 1)),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const EventPage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class EventPage extends StatefulWidget {
+  const EventPage({super.key, required this.title});
 
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<EventPage> createState() => _EventPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _EventPageState extends State<EventPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,139 +41,14 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Column(
           children: [
-            banner_event(false),
-            banner_event(true),
+            banner_event(
+                false, "Basketball Court 1", "15:00-17:00", "17 FEB 2024"),
+            banner_event(
+                true, "Basketball Court 2", "12:00-16:00", "18 FEB 2024"),
           ],
         ),
       ),
       backgroundColor: const Color.fromRGBO(244, 230, 217, 1),
-    );
-  }
-
-  AppBar nav_bar() {
-    return AppBar(
-      toolbarHeight: 60,
-      backgroundColor: const Color.fromRGBO(164, 151, 134, 1),
-      leading: const Row(
-        children: [
-          SizedBox(width: 10.0),
-          CircleAvatar(
-            radius: 22,
-            backgroundImage: AssetImage('assets/picture/jane.png'),
-          ),
-        ],
-      ),
-      actions: [
-        IconButton(onPressed: () => {}, icon: const Icon(Icons.search)),
-        Container(
-            width: 1, color: const Color.fromRGBO(45, 61, 88, 1), height: 20),
-        IconButton(onPressed: () => {}, icon: const Icon(Icons.home)),
-        Container(
-            width: 1, color: const Color.fromRGBO(45, 61, 88, 1), height: 20),
-        IconButton(onPressed: () => {}, icon: const Icon(Icons.notifications)),
-      ],
-    );
-  }
-
-  GestureDetector banner_event(join) {
-    Color status_color =
-        join ? Color.fromRGBO(123, 229, 7, 1) : Color.fromRGBO(255, 69, 84, 1);
-    IconData status_icon =
-        join ? Icons.check_circle_outline : Icons.cancel_outlined;
-
-    return GestureDetector(
-      onTap: () => {},
-      child: Padding(
-        padding: const EdgeInsets.only(left: 30, right: 30, top: 20),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(25.0),
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25.0),
-              image: const DecorationImage(
-                image: AssetImage('assets/picture/court1.png'),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: MaterialBanner(
-              padding: EdgeInsets.all(20.0), // Inner padding
-              content: Stack(
-                children: <Widget>[
-                  // Stroked text as border.
-                  Text(
-                    'Basketball Court 1',
-                    style: TextStyle(
-                      fontSize: 20,
-                      foreground: Paint()
-                        ..style = PaintingStyle.stroke
-                        ..strokeWidth = 3
-                        ..color = Colors.black,
-                    ),
-                  ),
-                  // Solid text as fill.
-                  Text(
-                    'Basketball Court 1',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
-              backgroundColor:
-                  Colors.transparent, // Make background transparent
-              actions: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Stack(
-                      children: <Widget>[
-                        // Stroked text as border.
-                        Text(
-                          '13:00-15:00',
-                          style: TextStyle(
-                            fontSize: 30,
-                            foreground: Paint()
-                              ..style = PaintingStyle.stroke
-                              ..strokeWidth = 3
-                              ..color = Colors.black,
-                          ),
-                        ),
-                        // Solid text as fill.
-                        Text(
-                          '13:00-15:00',
-                          style: TextStyle(
-                            fontSize: 30,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-                Stack(children: [
-                  Container(
-                    width: 30,
-                    height: 30,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: status_color,
-                    ),
-                  ),
-                  Icon(
-                    status_icon,
-                    color: Colors.white,
-                    size: 30,
-                  ),
-                ]),
-                SizedBox(
-                  height: 10,
-                )
-              ],
-            ),
-          ),
-        ),
-      ),
     );
   }
 }
