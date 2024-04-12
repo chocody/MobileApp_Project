@@ -19,15 +19,12 @@ class MyApp extends StatelessWidget {
             seedColor: const Color.fromRGBO(164, 151, 134, 1)),
         useMaterial3: true,
       ),
-      home: const EventCreatePage(title: 'Flutter Demo Home Page'),
+      home: EventCreatePage(),
     );
   }
 }
 
 class EventCreatePage extends StatefulWidget {
-  const EventCreatePage({super.key, required this.title});
-
-  final String title;
 
   @override
   State<EventCreatePage> createState() => _EventCreatePageState();
@@ -37,7 +34,7 @@ class _EventCreatePageState extends State<EventCreatePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: page_bar("Create Event"),
+      appBar: page_bar("Create Event",context),
       body: Center(
           child: Column(
         children: [

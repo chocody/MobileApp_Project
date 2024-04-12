@@ -9,7 +9,7 @@ TextStyle font_page_bar(font_color) {
   );
 }
 
-AppBar nav_bar() {
+AppBar nav_bar(context) {
   return AppBar(
     toolbarHeight: 60,
     backgroundColor: const Color.fromRGBO(164, 151, 134, 1),
@@ -23,18 +23,20 @@ AppBar nav_bar() {
       ],
     ),
     actions: [
-      IconButton(onPressed: () => {}, icon: const Icon(Icons.search)),
+      IconButton(
+        onPressed: () => {Navigator.of(context).pushNamed("create_event")},
+        icon: const Icon(Icons.search)),
       Container(
           width: 1, color: const Color.fromRGBO(45, 61, 88, 1), height: 20),
-      IconButton(onPressed: () => {}, icon: const Icon(Icons.home)),
+      IconButton(onPressed: () => {{Navigator.of(context).pushNamed("create_group")}}, icon: const Icon(Icons.home)),
       Container(
           width: 1, color: const Color.fromRGBO(45, 61, 88, 1), height: 20),
-      IconButton(onPressed: () => {}, icon: const Icon(Icons.notifications)),
+      IconButton(onPressed: () => {{Navigator.of(context).pushNamed("event")}}, icon: const Icon(Icons.notifications)),
     ],
   );
 }
 
-AppBar page_bar(page_name) {
+AppBar page_bar(page_name,context) {
   String page = page_name;
 
   return AppBar(
@@ -43,7 +45,7 @@ AppBar page_bar(page_name) {
     leading: Row(
       children: [
         IconButton(
-          onPressed: () => {},
+          onPressed: () => {Navigator.of(context).pushNamed("event")},
           icon: Icon(
             Icons.arrow_left,
             size: 60,

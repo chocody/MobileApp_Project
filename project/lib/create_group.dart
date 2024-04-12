@@ -19,15 +19,12 @@ class MyApp extends StatelessWidget {
             seedColor: const Color.fromRGBO(164, 151, 134, 1)),
         useMaterial3: true,
       ),
-      home: const GroupCreatePage(title: 'Flutter Demo Home Page'),
+      home: GroupCreatePage(),
     );
   }
 }
 
 class GroupCreatePage extends StatefulWidget {
-  const GroupCreatePage({super.key, required this.title});
-
-  final String title;
 
   @override
   State<GroupCreatePage> createState() => _GroupCreatePageState();
@@ -37,7 +34,7 @@ class _GroupCreatePageState extends State<GroupCreatePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: page_bar("Create Group"),
+      appBar: page_bar("Create Group",context),
       body: Center(
           child: Column(
         children: [
