@@ -1,40 +1,55 @@
 import 'package:demo/widget.dart';
 import 'package:flutter/material.dart';
-
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color.fromRGBO(164, 151, 134, 1)),
-        useMaterial3: true,
-      ),
-      home: GroupCreatePage(),
-    );
-  }
-}
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 
 class GroupCreatePage extends StatefulWidget {
-
   @override
   State<GroupCreatePage> createState() => _GroupCreatePageState();
 }
 
 class _GroupCreatePageState extends State<GroupCreatePage> {
+  Position? _currentLocation;
+  late bool servicePermission = false;
+  late LocationPermission permission;
+
+  String _currentAddress = "";
+
+  Future<Position> _getCurrentLocation() async {
+    servicePermission = await Geolocator.isLocationServiceEnabled();
+    if (!servicePermission) {
+      print("Service disabled");
+    }
+
+    permission = await Geolocator.checkPermission();
+
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+    }
+
+    return await Geolocator.getCurrentPosition();
+  }
+
+  _getAddressFromCoordinates() async {
+    try {
+      List<Placemark> placesmark = await placemarkFromCoordinates(
+          _currentLocation!.latitude, _currentLocation!.longitude);
+
+      Placemark place = placesmark[0];
+
+      setState(() {
+        _currentAddress = "${place.locality}, ${place.country}";
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: page_bar("Create Group",context),
+      resizeToAvoidBottomInset: false,
+      appBar: page_bar("Create Group", context),
       body: Center(
           child: Column(
         children: [
@@ -68,10 +83,7 @@ class _GroupCreatePageState extends State<GroupCreatePage> {
               SizedBox(
                 width: 15,
               ),
-              Text(
-                "Group name",
-                style: font_page_bar(Colors.black),
-              ),
+              text("Group name", Colors.black, 24),
               SizedBox(
                 width: 10,
               ),
@@ -89,10 +101,7 @@ class _GroupCreatePageState extends State<GroupCreatePage> {
               SizedBox(
                 width: 15,
               ),
-              Text(
-                "Description",
-                style: font_page_bar(Colors.black),
-              ),
+              text("Description", Colors.black, 24),
               SizedBox(
                 width: 10,
               ),
@@ -110,10 +119,7 @@ class _GroupCreatePageState extends State<GroupCreatePage> {
               SizedBox(
                 width: 15,
               ),
-              Text(
-                "Location",
-                style: font_page_bar(Colors.black),
-              ),
+              text("Location", Colors.black, 24),
               SizedBox(
                 width: 5,
               ),
@@ -135,7 +141,12 @@ class _GroupCreatePageState extends State<GroupCreatePage> {
                         ),
                       )),
                   IconButton(
-                    onPressed: () => {}, // Handle button press action
+                    onPressed: () async {
+                      _currentLocation = await _getCurrentLocation();
+                      await _getAddressFromCoordinates();
+                      print("${_currentLocation}");
+                      print("${_currentAddress}");
+                    }, // Handle button press action
                     icon: Icon(Icons.location_on_outlined,
                         size: 25, color: Colors.black),
                   ),
@@ -165,7 +176,7 @@ class _GroupCreatePageState extends State<GroupCreatePage> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color.fromRGBO(164, 151, 134, 1),
                 ),
-              )
+              ),
             ],
           ),
         ],

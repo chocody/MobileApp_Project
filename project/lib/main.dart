@@ -1,5 +1,6 @@
 import 'package:demo/create_event.dart';
 import 'package:demo/create_group.dart';
+import 'package:demo/event_detail_page.dart';
 import 'package:demo/event.dart';
 import 'package:flutter/material.dart';
 
@@ -12,12 +13,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return MaterialApp.router(
-    //   debugShowCheckedModeBanner: false,
-    //   routeInformationProvider: MyRouter().router.routeInformationProvider,
-    //   routeInformationParser: MyRouter().router.routeInformationParser,
-    //   routerDelegate: MyRouter().router.routerDelegate,
-    // );
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
@@ -26,6 +21,7 @@ class MyApp extends StatelessWidget {
           "event": (BuildContext context) => EventPage(),
           "create_event": (BuildContext context) => EventCreatePage(),
           "create_group": (BuildContext context) => GroupCreatePage(),
+          "event_detail": (BuildContext context) => EventDetailPage(),
         });
   }
 }

@@ -1,29 +1,6 @@
 import 'package:demo/widget.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color.fromRGBO(164, 151, 134, 1)),
-        useMaterial3: true,
-      ),
-      home: EventCreatePage(),
-    );
-  }
-}
-
 class EventCreatePage extends StatefulWidget {
 
   @override
@@ -34,6 +11,7 @@ class _EventCreatePageState extends State<EventCreatePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: page_bar("Create Event",context),
       body: Center(
           child: Column(
@@ -47,10 +25,7 @@ class _EventCreatePageState extends State<EventCreatePage> {
               SizedBox(
                 width: 15,
               ),
-              Text(
-                "Event name",
-                style: font_page_bar(Colors.black),
-              ),
+              text("Event name",Colors.black,24),
               SizedBox(
                 width: 10,
               ),
@@ -68,10 +43,7 @@ class _EventCreatePageState extends State<EventCreatePage> {
               SizedBox(
                 width: 15,
               ),
-              Text(
-                "Date",
-                style: font_page_bar(Colors.black),
-              ),
+              text("Date",Colors.black,24),
               SizedBox(
                 width: 10,
               ),
@@ -89,18 +61,12 @@ class _EventCreatePageState extends State<EventCreatePage> {
               SizedBox(
                 width: 15,
               ),
-              Text(
-                "Time",
-                style: font_page_bar(Colors.black),
-              ),
+              text("Time",Colors.black,24),
               SizedBox(
                 width: 10,
               ),
               textfield(""),
-              Text(
-                " : ",
-                style: font_page_bar(Colors.black),
-              ),
+              text(" : ",Colors.black,24),
               textfield(""),
               SizedBox(
                 width: 120,
@@ -115,10 +81,7 @@ class _EventCreatePageState extends State<EventCreatePage> {
               SizedBox(
                 width: 15,
               ),
-              Text(
-                "Detail",
-                style: font_page_bar(Colors.black),
-              ),
+              text("Detail",Colors.black,24),
               SizedBox(
                 width: 10,
               ),
@@ -136,10 +99,7 @@ class _EventCreatePageState extends State<EventCreatePage> {
               SizedBox(
                 width: 15,
               ),
-              Text(
-                "Minimum user",
-                style: font_page_bar(Colors.black),
-              ),
+              text("Minimum user",Colors.black,24),
               SizedBox(
                 width: 10,
               ),
@@ -157,10 +117,7 @@ class _EventCreatePageState extends State<EventCreatePage> {
               SizedBox(
                 width: 15,
               ),
-              Text(
-                "Limit time",
-                style: font_page_bar(Colors.black),
-              ),
+              text("Limit time",Colors.black,24),
               SizedBox(
                 width: 10,
               ),
@@ -168,10 +125,7 @@ class _EventCreatePageState extends State<EventCreatePage> {
               SizedBox(
                 width: 10,
               ),
-              Text(
-                "minute",
-                style: font_page_bar(Colors.black),
-              ),
+              text("minute",Colors.black,24),
               SizedBox(
                 width: 60,
               ),

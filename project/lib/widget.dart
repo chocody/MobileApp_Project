@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
 
-TextStyle font_page_bar(font_color) {
+Text text(input_text, font_color, font_size) {
+  String text = input_text;
+  return Text(
+    text,
+    style: font_page_bar(font_color, font_size),
+  );
+}
+
+TextStyle font_page_bar(font_color, font_size) {
+  double size = font_size.toDouble();
   return TextStyle(
     fontFamily: 'Poppins',
-    fontSize: 24,
+    fontSize: size,
     fontWeight: FontWeight.w500,
     color: font_color,
   );
@@ -24,19 +33,27 @@ AppBar nav_bar(context) {
     ),
     actions: [
       IconButton(
-        onPressed: () => {Navigator.of(context).pushNamed("create_event")},
-        icon: const Icon(Icons.search)),
+          onPressed: () => {Navigator.of(context).pushNamed("create_event")},
+          icon: const Icon(Icons.search)),
       Container(
           width: 1, color: const Color.fromRGBO(45, 61, 88, 1), height: 20),
-      IconButton(onPressed: () => {{Navigator.of(context).pushNamed("create_group")}}, icon: const Icon(Icons.home)),
+      IconButton(
+          onPressed: () => {
+                {Navigator.of(context).pushNamed("create_group")}
+              },
+          icon: const Icon(Icons.home)),
       Container(
           width: 1, color: const Color.fromRGBO(45, 61, 88, 1), height: 20),
-      IconButton(onPressed: () => {{Navigator.of(context).pushNamed("event")}}, icon: const Icon(Icons.notifications)),
+      IconButton(
+          onPressed: () => {
+                {Navigator.of(context).pushNamed("event")}
+              },
+          icon: const Icon(Icons.notifications)),
     ],
   );
 }
 
-AppBar page_bar(page_name,context) {
+AppBar page_bar(page_name, context) {
   String page = page_name;
 
   return AppBar(
@@ -55,9 +72,13 @@ AppBar page_bar(page_name,context) {
       ],
     ),
     leadingWidth: 80,
-    title: Text(
-      page,
-      style: font_page_bar(Colors.white),
+    title: Row(
+      children: [
+        SizedBox(
+          width: 20,
+        ),
+        text(page, Colors.white, 24),
+      ],
     ),
   );
 }
@@ -82,7 +103,22 @@ Expanded textfield(guide_text) {
   ));
 }
 
-GestureDetector banner_event(join, group_name, set_time, event_date) {
+SizedBox person_tile(name) {
+  String text = name;
+  return SizedBox(
+    width: 300,
+    child: ListTile(
+      leading: CircleAvatar(
+        radius: 22,
+        backgroundImage: AssetImage('assets/picture/jane.png'),
+      ),
+      title: Text(text),
+      tileColor: Color.fromRGBO(214, 191, 175, 1),
+    ),
+  );
+}
+
+GestureDetector banner_event(join, group_name, set_time, event_date, context) {
   Color status_color =
       join ? Color.fromRGBO(123, 229, 7, 1) : Color.fromRGBO(255, 69, 84, 1);
   IconData status_icon =
@@ -92,7 +128,7 @@ GestureDetector banner_event(join, group_name, set_time, event_date) {
   String date = event_date;
 
   return GestureDetector(
-    onTap: () => {},
+    onTap: () => {Navigator.of(context).pushNamed("event_detail")},
     child: Padding(
       padding: const EdgeInsets.only(left: 30, right: 30, top: 20),
       child: ClipRRect(
