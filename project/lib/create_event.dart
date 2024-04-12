@@ -48,35 +48,161 @@ class _EventCreatePageState extends State<EventCreatePage> {
           Row(
             children: [
               SizedBox(
-                width: 10,
-              ),
-              const SizedBox(
-                width: 20,
+                width: 15,
               ),
               Text(
                 "Event name",
                 style: font_page_bar(Colors.black),
               ),
+              SizedBox(
+                width: 10,
+              ),
+              textfield(""),
+              SizedBox(
+                width: 15,
+              )
             ],
+          ),
+          SizedBox(
+            height: 30,
           ),
           Row(
             children: [
-              Expanded(
-                  child: SizedBox(
-                height: 40,
-                width: 20,
-                child: TextField(
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.white,
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black, width: 2.5),
-                      borderRadius: BorderRadius.all(Radius.circular(12)),
-                    ),
+              SizedBox(
+                width: 15,
+              ),
+              Text(
+                "Date",
+                style: font_page_bar(Colors.black),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              textfield("DD/MM/YYYY"),
+              SizedBox(
+                width: 100,
+              )
+            ],
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          Row(
+            children: [
+              SizedBox(
+                width: 15,
+              ),
+              Text(
+                "Time",
+                style: font_page_bar(Colors.black),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              textfield(""),
+              Text(
+                " : ",
+                style: font_page_bar(Colors.black),
+              ),
+              textfield(""),
+              SizedBox(
+                width: 120,
+              )
+            ],
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          Row(
+            children: [
+              SizedBox(
+                width: 15,
+              ),
+              Text(
+                "Detail",
+                style: font_page_bar(Colors.black),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              textfield(""),
+              SizedBox(
+                width: 15,
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          Row(
+            children: [
+              SizedBox(
+                width: 15,
+              ),
+              Text(
+                "Minimum user",
+                style: font_page_bar(Colors.black),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              textfield(""),
+              SizedBox(
+                width: 100,
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          Row(
+            children: [
+              SizedBox(
+                width: 15,
+              ),
+              Text(
+                "Limit time",
+                style: font_page_bar(Colors.black),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              textfield(""),
+              SizedBox(
+                width: 10,
+              ),
+              Text(
+                "minute",
+                style: font_page_bar(Colors.black),
+              ),
+              SizedBox(
+                width: 60,
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 25,
+          ),
+          Row(
+            children: [
+              SizedBox(
+                width: 260,
+              ),
+              ElevatedButton(
+                onPressed: () {},
+                child: const Text(
+                  "Add",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'Poppins',
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
                   ),
-                  controller: TextEditingController(),
                 ),
-              )),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color.fromRGBO(164, 151, 134, 1),
+                ),
+              )
             ],
           ),
         ],

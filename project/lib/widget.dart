@@ -60,6 +60,26 @@ AppBar page_bar(page_name) {
   );
 }
 
+Expanded textfield(guide_text) {
+  String text = guide_text;
+  return Expanded(
+      child: SizedBox(
+    height: 30,
+    child: TextField(
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: Colors.white,
+        labelText: text,
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.black, width: 2.5),
+          borderRadius: BorderRadius.all(Radius.circular(12)),
+        ),
+      ),
+      controller: TextEditingController(),
+    ),
+  ));
+}
+
 GestureDetector banner_event(join, group_name, set_time, event_date) {
   Color status_color =
       join ? Color.fromRGBO(123, 229, 7, 1) : Color.fromRGBO(255, 69, 84, 1);
