@@ -7,7 +7,6 @@ class EventDetailPage extends StatefulWidget {
 }
 
 class _EventDetailPageState extends State<EventDetailPage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -108,6 +107,23 @@ class _EventDetailPageState extends State<EventDetailPage> {
               ),
               SizedBox(
                 height: 15,
+              ),
+              SizedBox(
+                width: 300.0, // Set the desired width
+                child: ElevatedButton(
+                    onPressed: () {
+                      // Your button press action here
+                    },
+                    child: Text("Let's join",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Poppins',
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        )),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color.fromRGBO(164, 151, 134, 1),
+                    )),
               ),
               Row(
                 children: [
