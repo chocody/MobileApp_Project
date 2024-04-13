@@ -1,7 +1,12 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:demo/widget.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:image_picker/image_picker.dart';
 
 class GroupCreatePage extends StatefulWidget {
   @override
@@ -9,9 +14,15 @@ class GroupCreatePage extends StatefulWidget {
 }
 
 class _GroupCreatePageState extends State<GroupCreatePage> {
+  var groupnameController = new TextEditingController();
+  var descriptionController = new TextEditingController();
+
   Position? _currentLocation;
   late bool servicePermission = false;
   late LocationPermission permission;
+
+  final firestore = FirebaseFirestore.instance;
+  File? _image;
 
   String _currentAddress = "";
 
@@ -68,10 +79,40 @@ class _GroupCreatePageState extends State<GroupCreatePage> {
               ),
             ),
             child: Center(
-              child: IconButton(
-                onPressed: () => {},
-                icon: Icon(Icons.image_outlined,
-                    size: 60, color: Color.fromRGBO(188, 190, 192, 1)),
+              child: Stack(
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Center(
+                          child:
+                              _image == null ? Text("") : Image.file(_image!),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Positioned(
+                    top: (60),
+                    left: (120),
+                    child: Visibility(
+                      visible:
+                          _image == null, // Button visible only when no image
+                      child: IconButton(
+                        icon: Icon(Icons.image_outlined),
+                        onPressed: () async {
+                          final image = await ImagePicker()
+                              .pickImage(source: ImageSource.gallery);
+                          if (image != null) {
+                            setState(() {
+                              _image = File(image.path);
+                            });
+                          }
+                        },
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -87,7 +128,7 @@ class _GroupCreatePageState extends State<GroupCreatePage> {
               SizedBox(
                 width: 10,
               ),
-              textfield(""),
+              textformfield("", groupnameController),
               SizedBox(
                 width: 15,
               )
@@ -105,7 +146,7 @@ class _GroupCreatePageState extends State<GroupCreatePage> {
               SizedBox(
                 width: 10,
               ),
-              textfield(""),
+              textformfield("", descriptionController),
               SizedBox(
                 width: 15,
               )
@@ -144,7 +185,7 @@ class _GroupCreatePageState extends State<GroupCreatePage> {
                     onPressed: () async {
                       _currentLocation = await _getCurrentLocation();
                       await _getAddressFromCoordinates();
-                      print("${_currentLocation}");
+                      // print("${_currentLocation}");
                       print("${_currentAddress}");
                     }, // Handle button press action
                     icon: Icon(Icons.location_on_outlined,
@@ -163,7 +204,27 @@ class _GroupCreatePageState extends State<GroupCreatePage> {
                 width: 240,
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  var imageName =
+                      DateTime.now().millisecondsSinceEpoch.toString();
+                  var storageRef = FirebaseStorage.instance
+                      .ref()
+                      .child('coverpage/$imageName.jpg');
+                  var uploadTask = storageRef.putFile(_image!);
+                  var downloadUrl =
+                      await (await uploadTask).ref.getDownloadURL();
+
+                  firestore.collection("Group Detail").add({
+                    "Group name": groupnameController.text,
+                    "Description": descriptionController.text,
+                    "Address": "${_currentAddress}",
+                    "Image": downloadUrl.toString(),
+                    "Users": [],
+                  });
+                  Navigator.of(context).pop();
+                  groupnameController.clear();
+                  descriptionController.clear();
+                },
                 child: const Text(
                   "Create",
                   style: TextStyle(

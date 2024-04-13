@@ -83,12 +83,13 @@ AppBar page_bar(page_name, context) {
   );
 }
 
-Expanded textfield(guide_text) {
+Expanded textformfield(guide_text,controller) {
   String text = guide_text;
   return Expanded(
       child: SizedBox(
     height: 30,
-    child: TextField(
+    child: TextFormField(
+      controller: controller,
       decoration: InputDecoration(
         filled: true,
         fillColor: Colors.white,
@@ -98,7 +99,6 @@ Expanded textfield(guide_text) {
           borderRadius: BorderRadius.all(Radius.circular(12)),
         ),
       ),
-      controller: TextEditingController(),
     ),
   ));
 }

@@ -112,7 +112,6 @@ class _EventDetailPageState extends State<EventDetailPage> {
                 width: 300.0, // Set the desired width
                 child: ElevatedButton(
                     onPressed: () {
-                      // Your button press action here
                     },
                     child: Text("Let's join",
                         style: TextStyle(
