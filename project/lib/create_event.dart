@@ -155,7 +155,7 @@ class _EventCreatePageState extends State<EventCreatePage> {
                   firestore.collection("Event Detail").add({
                     "Event name": eventnameController.text,
                     "Date": dateController.text,
-                    "Time": "${time1Controller}-${time2Controller}",
+                    "Time": "${time1Controller.text}-${time2Controller.text}",
                     "Detail": detailController.text,
                     "Minimum User": minuserController.text,
                     "Limit time": limitController.text,

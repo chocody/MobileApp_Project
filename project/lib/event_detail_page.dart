@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:demo/widget.dart';
 import 'package:flutter/material.dart';
+
+final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
 class EventDetailPage extends StatefulWidget {
   @override
@@ -7,6 +10,7 @@ class EventDetailPage extends StatefulWidget {
 }
 
 class _EventDetailPageState extends State<EventDetailPage> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -111,8 +115,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
               SizedBox(
                 width: 300.0, // Set the desired width
                 child: ElevatedButton(
-                    onPressed: () {
-                    },
+                    onPressed: () {},
                     child: Text("Let's join",
                         style: TextStyle(
                           color: Colors.white,

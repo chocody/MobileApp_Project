@@ -118,13 +118,14 @@ SizedBox person_tile(name) {
   );
 }
 
-GestureDetector banner_event(join, group_name, set_time, event_date, context) {
+GestureDetector banner_event(join, event_name, event_time, event_date, context) {
   Color status_color =
       join ? Color.fromRGBO(123, 229, 7, 1) : Color.fromRGBO(255, 69, 84, 1);
   IconData status_icon =
       join ? Icons.check_circle_outline : Icons.cancel_outlined;
-  String name = group_name;
-  String time = set_time;
+
+  String name = event_name;
+  String time = event_time;
   String date = event_date;
 
   return GestureDetector(
