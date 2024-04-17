@@ -8,7 +8,6 @@ class EventCreatePage extends StatefulWidget {
 }
 
 class _EventCreatePageState extends State<EventCreatePage> {
-  
   var eventnameController = new TextEditingController();
   var dateController = new TextEditingController();
   var time1Controller = new TextEditingController();
@@ -152,23 +151,40 @@ class _EventCreatePageState extends State<EventCreatePage> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  firestore.collection("Event Detail").add({
-                    "Event name": eventnameController.text,
-                    "Date": dateController.text,
-                    "Time": "${time1Controller.text}-${time2Controller.text}",
-                    "Detail": detailController.text,
-                    "Minimum User": minuserController.text,
-                    "Limit time": limitController.text,
-                    "Users":[],
-                  });
-                  Navigator.of(context).pop();
-                  eventnameController.clear();
-                  dateController.clear();
-                  time1Controller.clear();
-                  time2Controller.clear();
-                  detailController.clear();
-                  minuserController.clear();
-                  limitController.clear();
+                  if (eventnameController.text.isEmpty ||
+                      dateController.text.isEmpty ||
+                      time1Controller.text.isEmpty ||
+                      time2Controller.text.isEmpty ||
+                      detailController.text.isEmpty ||
+                      minuserController.text.isEmpty ||
+                      limitController.text.isEmpty) {
+                    showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                            title: const Text('Alert'),
+                            content:
+                                const Text('Please provide all information')));
+                  } else {
+                    int parsed_minuser = int.parse(minuserController.text);
+                    int parsed_limit = int.parse(limitController.text);
+                    firestore.collection("Event Detail").add({
+                      "Event name": eventnameController.text,
+                      "Date": dateController.text,
+                      "Time": "${time1Controller.text}-${time2Controller.text}",
+                      "Detail": detailController.text,
+                      "Minimum User": parsed_minuser,
+                      "Limit time": parsed_limit,
+                      "Users": [],
+                    });
+                    Navigator.of(context).pop();
+                    eventnameController.clear();
+                    dateController.clear();
+                    time1Controller.clear();
+                    time2Controller.clear();
+                    detailController.clear();
+                    minuserController.clear();
+                    limitController.clear();
+                  }
                 },
                 child: const Text(
                   "Add",

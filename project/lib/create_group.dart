@@ -205,27 +205,42 @@ class _GroupCreatePageState extends State<GroupCreatePage> {
               ),
               ElevatedButton(
                 onPressed: () async {
+                  var imagecheck = true;
                   var imageName =
                       DateTime.now().millisecondsSinceEpoch.toString();
                   var storageRef = FirebaseStorage.instance
                       .ref()
                       .child('coverpage/$imageName.jpg');
-                  var uploadTask = storageRef.putFile(_image!);
-                  var downloadUrl =
-                      await (await uploadTask).ref.getDownloadURL();
-
-                  firestore.collection("Group Detail").add({
-                    "Group name": groupnameController.text,
-                    "Description": descriptionController.text,
-                    "Address": "${_currentAddress}",
-                    "Latitude": _currentLocation!.latitude,
-                    "Longtitude": _currentLocation!.longitude,
-                    "Image": downloadUrl.toString(),
-                    "Users": [],
-                  });
-                  Navigator.of(context).pop();
-                  groupnameController.clear();
-                  descriptionController.clear();
+                  if (_image == null) {
+                    imagecheck = false;
+                  }
+                  if (groupnameController.text.isEmpty ||
+                      descriptionController.text.isEmpty ||
+                      imagecheck == false ||
+                      _currentAddress.toString() == "") {
+                    showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                            title: const Text('Alert'),
+                            content:
+                                const Text('Please provide all information')));
+                  } else {
+                    var uploadTask = storageRef.putFile(_image!);
+                    var downloadUrl =
+                        await (await uploadTask).ref.getDownloadURL();
+                    firestore.collection("Group Detail").add({
+                      "Group name": groupnameController.text,
+                      "Description": descriptionController.text,
+                      "Address": "${_currentAddress}",
+                      "Latitude": _currentLocation!.latitude,
+                      "Longtitude": _currentLocation!.longitude,
+                      "Image": downloadUrl.toString(),
+                      "Users": [],
+                    });
+                    Navigator.of(context).pop();
+                    groupnameController.clear();
+                    descriptionController.clear();
+                  }
                 },
                 child: const Text(
                   "Create",
