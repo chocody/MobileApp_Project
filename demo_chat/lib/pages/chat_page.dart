@@ -158,12 +158,13 @@ class _ChatPageState extends State<ChatPage> {
       child: Row(
         children: [
           // text field should take up most of the space
-          Expanded(child: 
+          Expanded(child:
             MytextField(
               hintText: "Type a message",
               obscureText: false,
               controller: _messageController,
               focusNode: myFocusNode,
+              color: Color.fromRGBO(212, 190, 166, 1),
             )
           ),
       

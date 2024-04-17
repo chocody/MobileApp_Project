@@ -67,6 +67,7 @@ class RegisterPage extends StatelessWidget {
               hintText: "Email",
               obscureText: false,
               controller: _emailController,
+              color: Colors.white,
             ),
 
             const SizedBox(
@@ -78,6 +79,7 @@ class RegisterPage extends StatelessWidget {
               hintText: "Password",
               obscureText: true,
               controller: _passwordController,
+              color: Colors.white,
             ),
 
             const SizedBox(
@@ -89,6 +91,7 @@ class RegisterPage extends StatelessWidget {
               hintText: "Confirm password",
               obscureText: true,
               controller: _confirmpasswordController,
+              color: Colors.white,
             ),
 
             const SizedBox(
@@ -97,8 +100,11 @@ class RegisterPage extends StatelessWidget {
 
             //login button
             MyButton(
-              text: "Register",
+              text: Text("Register"),
               onTap: () => register(context),
+              color: Colors.white,
+              w: 20,
+              h: 20,
             ),
 
             const SizedBox(
