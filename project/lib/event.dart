@@ -13,6 +13,8 @@ class _EventPageState extends State<EventPage> {
   final Geolocator geolocator = Geolocator();
   Position? currentLocation;
   String myLocation = '';
+  late bool servicePermission = false;
+  late LocationPermission permission;
 
   @override
   void initState() {
@@ -20,11 +22,19 @@ class _EventPageState extends State<EventPage> {
     _getCurrentLocation();
   }
 
-  Future<void> _getCurrentLocation() async {
-    final Position position = await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high,
-    );
-    print('Your current location: ${position.latitude}, ${position.longitude}');
+  Future<Position> _getCurrentLocation() async {
+    servicePermission = await Geolocator.isLocationServiceEnabled();
+    if (!servicePermission) {
+      print("Service disabled");
+    }
+
+    permission = await Geolocator.checkPermission();
+
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+    }
+
+    return await Geolocator.getCurrentPosition();
   }
 
   Widget build(BuildContext context) {
