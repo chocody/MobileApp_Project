@@ -38,13 +38,13 @@ class _EventPageState extends State<EventPage> {
   }
 
   Widget build(BuildContext context) {
-    int count = 0;
     return Scaffold(
       appBar: nav_bar(context),
       body: StreamBuilder(
           stream:
               FirebaseFirestore.instance.collection("Event Detail").snapshots(),
           builder: (context, snapshot) {
+            int count = 0;
             return ListView.builder(
               scrollDirection: Axis.vertical,
               itemCount: snapshot.data?.docs.length,
@@ -53,6 +53,7 @@ class _EventPageState extends State<EventPage> {
                 print(snapshot.data?.docs[index]["Date"]);
                 print(snapshot.data?.docs[index]["Time"]);
                 print(snapshot.data?.docs[index]["Detail"]);
+                print("------------------------------------------------");
                 String event_name =
                     (snapshot.data?.docs[index]["Event name"]).toString();
                 String event_time =
@@ -60,6 +61,7 @@ class _EventPageState extends State<EventPage> {
                 String event_date =
                     (snapshot.data?.docs[index]["Date"]).toString();
                 count += 1;
+                print(count);
                 return banner_event(
                     false, event_name, event_time, event_date, count, context);
               },
