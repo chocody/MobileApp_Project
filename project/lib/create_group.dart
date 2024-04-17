@@ -186,8 +186,8 @@ class _GroupCreatePageState extends State<GroupCreatePage> {
                       _currentLocation = await _getCurrentLocation();
                       await _getAddressFromCoordinates();
                       // print("${_currentLocation}");
-                      print("${_currentAddress}");
-                    }, // Handle button press action
+                      // print("${_currentAddress}");
+                    },
                     icon: Icon(Icons.location_on_outlined,
                         size: 25, color: Colors.black),
                   ),
@@ -218,6 +218,8 @@ class _GroupCreatePageState extends State<GroupCreatePage> {
                     "Group name": groupnameController.text,
                     "Description": descriptionController.text,
                     "Address": "${_currentAddress}",
+                    "Latitude": _currentLocation!.latitude,
+                    "Longtitude": _currentLocation!.longitude,
                     "Image": downloadUrl.toString(),
                     "Users": [],
                   });

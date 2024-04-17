@@ -83,7 +83,7 @@ AppBar page_bar(page_name, context) {
   );
 }
 
-Expanded textformfield(guide_text,controller) {
+Expanded textformfield(guide_text, controller) {
   String text = guide_text;
   return Expanded(
       child: SizedBox(
@@ -118,7 +118,8 @@ SizedBox person_tile(name) {
   );
 }
 
-GestureDetector banner_event(join, event_name, event_time, event_date, context) {
+GestureDetector banner_event(
+    join, event_name, event_time, event_date, count, context) {
   Color status_color =
       join ? Color.fromRGBO(123, 229, 7, 1) : Color.fromRGBO(255, 69, 84, 1);
   IconData status_icon =
@@ -128,8 +129,15 @@ GestureDetector banner_event(join, event_name, event_time, event_date, context) 
   String time = event_time;
   String date = event_date;
 
+  int no = count;
+
   return GestureDetector(
-    onTap: () => {Navigator.of(context).pushNamed("event_detail")},
+    onTap: () => {
+      Navigator.of(context).pushNamed(
+        "event_detail",
+        arguments: no,
+      ),
+    },
     child: Padding(
       padding: const EdgeInsets.only(left: 30, right: 30, top: 20),
       child: ClipRRect(
