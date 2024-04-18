@@ -32,14 +32,12 @@ AppBar nav_bar(context) {
       ],
     ),
     actions: [
-      IconButton(
-          onPressed: () => {Navigator.of(context).pushNamed("create_event")},
-          icon: const Icon(Icons.search)),
+      IconButton(onPressed: () => {}, icon: const Icon(Icons.search)),
       Container(
           width: 1, color: const Color.fromRGBO(45, 61, 88, 1), height: 20),
       IconButton(
           onPressed: () => {
-                {Navigator.of(context).pushNamed("create_group")}
+                {Navigator.of(context).pushNamed("home")}
               },
           icon: const Icon(Icons.home)),
       Container(
@@ -62,7 +60,7 @@ AppBar page_bar(page_name, context) {
     leading: Row(
       children: [
         IconButton(
-          onPressed: () => {Navigator.of(context).pushNamed("event")},
+          onPressed: () => {Navigator.of(context).pushNamed("home")},
           icon: Icon(
             Icons.arrow_left,
             size: 60,

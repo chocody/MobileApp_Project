@@ -1,13 +1,32 @@
 {
   "project_info": {
-    "project_number": "234690204442",
-    "project_id": "mobileproject-b4648",
-    "storage_bucket": "mobileproject-b4648.appspot.com"
+    "project_number": "512914092191",
+    "project_id": "project-c8cf6",
+    "storage_bucket": "project-c8cf6.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:234690204442:android:a1a02033691d73b89a12a3",
+        "mobilesdk_app_id": "1:512914092191:android:0eb787750a35d7586d72aa",
+        "android_client_info": {
+          "package_name": "com.example.demo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5ABdP4vb8vHe-IucPntipf9PczPpL6Rs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:512914092191:android:2a270470a0d8aaf86d72aa",
         "android_client_info": {
           "package_name": "com.example.demo_chat"
         }
@@ -15,7 +34,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBDw39Balw91YI69Ct6_CncUdDwYK_Dvbg"
+          "current_key": "AIzaSyB5ABdP4vb8vHe-IucPntipf9PczPpL6Rs"
         }
       ],
       "services": {

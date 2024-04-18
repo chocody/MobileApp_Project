@@ -1,8 +1,8 @@
-import 'package:demo_chat/services/auth/auth_service.dart';
 import 'package:demo_chat/components/my_button.dart';
 import 'package:demo_chat/components/my_textfield.dart';
+import 'package:demo_chat/components/widget.dart';
+import 'package:demo_chat/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class RegisterPage extends StatelessWidget {
   // email and pw text controllers
@@ -26,8 +26,7 @@ class RegisterPage extends StatelessWidget {
       try {
         _auth.signUpWithEmailAndPassword(
             _emailController.text, _passwordController.text);
-      }
-      catch (e) {
+      } catch (e) {
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
@@ -39,24 +38,31 @@ class RegisterPage extends StatelessWidget {
     // password dont match -> tell user fix
     else {
       showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: Text("Passwords don't match!"),
-          ),
-        );
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text("Passwords don't match!"),
+        ),
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 211, 210, 210),
+      backgroundColor: Color.fromRGBO(244, 230, 217, 1),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // logo
-            Text("Let's create an account for you"),
+            Row(
+              children: [
+                SizedBox(
+                  width: 30,
+                ),
+                text("Let's create an account for you", Colors.black, 14),
+              ],
+            ),
 
             const SizedBox(
               height: 10,
@@ -100,11 +106,11 @@ class RegisterPage extends StatelessWidget {
 
             //login button
             MyButton(
-              text: Text("Register"),
+              text: text("Register", Colors.white, 16),
               onTap: () => register(context),
-              color: Colors.white,
-              w: 20,
-              h: 20,
+              color: Color.fromRGBO(164, 151, 134, 1),
+              w: 310,
+              h: 70,
             ),
 
             const SizedBox(
