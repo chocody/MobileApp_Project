@@ -1,4 +1,11 @@
+import 'package:demo_chat/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
+
+void logout() {
+    //get auth service
+    final _auth = AuthService();
+    _auth.signOut();
+}
 
 Text text(input_text, font_color, font_size) {
   String text = input_text;
@@ -32,6 +39,7 @@ AppBar nav_bar(context) {
       ],
     ),
     actions: [
+      IconButton(onPressed: () => {logout()}, icon: const Icon(Icons.logout)),
       IconButton(onPressed: () => {}, icon: const Icon(Icons.search)),
       Container(
           width: 1, color: const Color.fromRGBO(45, 61, 88, 1), height: 20),
