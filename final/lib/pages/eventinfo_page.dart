@@ -30,11 +30,19 @@ class EventInfoPage extends StatelessWidget {
           return Text('No data available');
         } else {
           final data = snapshot.data!.data()! as Map<String, dynamic>;
-
+          String gid = data["gid"];
           return FutureBuilder<DocumentSnapshot>(
-              future: _firestore.collection("groups").doc().get(),
-              builder: (context, groupSnapshot) {
-                final Gdata = snapshot.data!.data()! as Map<String, dynamic>;
+              future: _firestore.collection("groups").doc(gid).get(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  return Text('Error fetching data');
+                } else if (!snapshot.hasData || snapshot.data == null) {
+                  return Text('No data available');
+                } else {
+                  final gdata = snapshot.data!.data()! as Map<String, dynamic>;
+                  print(gdata);
                   return SingleChildScrollView(
                     child: Column(
                       children: [
@@ -71,7 +79,7 @@ class EventInfoPage extends StatelessWidget {
                             SizedBox(
                               width: 30,
                             ),
-                            text("", Colors.black, 16)
+                            text(gdata["groupName"], Colors.black, 16)
                           ],
                         ),
                         SizedBox(
@@ -149,6 +157,7 @@ class EventInfoPage extends StatelessWidget {
                       ],
                     ),
                   );
+                }
               });
         }
       },

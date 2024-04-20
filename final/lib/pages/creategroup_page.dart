@@ -133,9 +133,6 @@ class CreateGroupPage extends StatefulWidget {
   State<CreateGroupPage> createState() => _GroupCreatePageState();
 }
 
-class _groupNameController {
-}
-
 class _GroupCreatePageState extends State<CreateGroupPage> {
   var groupnameController = new TextEditingController();
   var descriptionController = new TextEditingController();
