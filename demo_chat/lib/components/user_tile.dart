@@ -7,8 +7,8 @@ class UserTile extends StatelessWidget {
     super.key,
     required this.text,
     required this.onTap,
-    });
-  
+  });
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -18,7 +18,7 @@ class UserTile extends StatelessWidget {
           color: Colors.amber,
           borderRadius: BorderRadius.circular(12),
         ),
-        margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 25),
+        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
         padding: EdgeInsets.all(20),
         child: Row(
           children: [
@@ -34,5 +34,4 @@ class UserTile extends StatelessWidget {
       ),
     );
   }
-  
 }
