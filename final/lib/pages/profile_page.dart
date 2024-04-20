@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:demo_chat/components/my_button.dart';
+import 'package:demo_chat/components/widget.dart';
 import 'package:demo_chat/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 
@@ -20,12 +21,7 @@ class ProfilePage extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Profile"),
-        backgroundColor: Colors.transparent,
-        // foregroundColor: Colors.grey,
-        elevation: 0,
-      ),
+      appBar: page_bar("Profile", context),
       body: Center(
         child: Column(
           children: [
@@ -50,7 +46,8 @@ class ProfilePage extends StatelessWidget{
                         ),
 
                         // username
-                        Text(data["username"]),
+                        text(data["username"], Colors.black,16),
+
 
                         const SizedBox(
                           height: 25,
@@ -58,8 +55,11 @@ class ProfilePage extends StatelessWidget{
 
                         //logout button
                         MyButton(
-                          text: "LOGOUT",
+                          text: text("LOGOUT", Colors.white, 16),
                           onTap: () => logout(context),
+                          color: Color.fromRGBO(164, 151, 134, 1),
+                          w: 200,
+                          h: 70,
                         ),
                       ],
                     );

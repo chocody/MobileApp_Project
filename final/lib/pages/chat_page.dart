@@ -209,6 +209,7 @@ class _ChatPageState extends State<ChatPage> {
               obscureText: false,
               controller: _messageController,
               focusNode: myFocusNode,
+              color: Colors.white,
             )
           ),
       

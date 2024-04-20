@@ -5,12 +5,14 @@ class MytextField extends StatelessWidget {
   final bool obscureText;
   final TextEditingController controller;
   final FocusNode? focusNode;
-  
+  final Color color;
+
   const MytextField({
     super.key,
     required this.hintText,
     required this.obscureText,
     required this.controller,
+    required this.color,
     this.focusNode,
   });
 
@@ -27,10 +29,9 @@ class MytextField extends StatelessWidget {
                 OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
             focusedBorder:
                 OutlineInputBorder(borderSide: BorderSide(color: Colors.black)),
-            fillColor: Colors.white,
+            fillColor: color,
             filled: true,
-            hintText: hintText
-        ),
+            hintText: hintText),
       ),
     );
   }

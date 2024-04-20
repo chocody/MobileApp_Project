@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:demo_chat/components/my_button.dart';
+import 'package:demo_chat/components/widget.dart';
 import 'package:demo_chat/services/chat/chat_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -109,8 +110,11 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
 
               // Submit button
               MyButton(
-                text: "CREATE GROUP",
+                text: text("Login", Colors.white, 16),
                 onTap: () => createGroup(context),
+                color: Color.fromRGBO(164, 151, 134, 1),
+                w: 200,
+                h: 70,
               )
             ],
           ),

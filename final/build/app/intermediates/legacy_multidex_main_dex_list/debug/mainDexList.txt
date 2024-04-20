@@ -212,6 +212,9 @@ com/google/android/gms/internal/common/zzs.class
 com/google/android/gms/internal/common/zzx.class
 com/google/android/gms/internal/common/zzy.class
 com/google/android/gms/internal/common/zzz.class
+com/google/android/gms/location/ActivityTransition$SupportedActivityTransition.class
+com/google/android/gms/location/Granularity.class
+com/google/android/gms/location/Priority.class
 com/google/android/play/core/integrity/model/IntegrityErrorCode.class
 com/google/android/play/core/integrity/model/StandardIntegrityErrorCode.class
 com/google/android/recaptcha/internal/zzeu.class

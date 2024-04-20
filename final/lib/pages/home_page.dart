@@ -1,6 +1,7 @@
 import "package:cloud_firestore/cloud_firestore.dart";
 import "package:demo_chat/components/group_tile.dart";
 import "package:demo_chat/components/popup_textfield.dart";
+import "package:demo_chat/components/widget.dart";
 import "package:demo_chat/pages/chat_page.dart";
 import "package:demo_chat/pages/creategroup_page.dart";
 import "package:demo_chat/pages/eventlist_page.dart";
@@ -40,7 +41,7 @@ class HomePage extends StatelessWidget{
     Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => EventListPage(),
+          builder: (context) => EventPage(),
         )
     );
   }
@@ -50,18 +51,8 @@ class HomePage extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Home"),
-        backgroundColor: Colors.transparent,
-        // foregroundColor: Colors.grey,
-        elevation: 0,
-        leading: IconButton(onPressed: () => toProfilePage(context), icon: Icon(Icons.person)),
-        actions: [
-          IconButton(onPressed: () =>toCreateGroupPage(context), icon: Icon(Icons.add)),
-          IconButton(onPressed: () => joingroup(context), icon: Icon(Icons.search)),
-          IconButton(onPressed: () =>toEventListPage(context), icon: Icon(Icons.event)),
-        ],
-      ),
+      appBar: nav_bar(context),
+      backgroundColor: Color.fromRGBO(244, 230, 217, 1),
       body: _buildGroupList(),
     );
   }
@@ -69,7 +60,7 @@ class HomePage extends StatelessWidget{
   //
 
 
-  // build a list of current user's groups 
+  // build a list of current user's groups
   Widget _buildGroupList() {
     return StreamBuilder(
       stream: _chatService.getGroupsStream(),

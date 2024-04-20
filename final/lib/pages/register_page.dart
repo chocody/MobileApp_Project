@@ -1,10 +1,9 @@
 import 'dart:typed_data';
-
+import 'package:demo_chat/components/widget.dart';
 import 'package:demo_chat/services/auth/auth_service.dart';
 import 'package:demo_chat/components/my_button.dart';
 import 'package:demo_chat/components/my_textfield.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -80,118 +79,90 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 211, 210, 210),
-      body: SingleChildScrollView(
-        child: 
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+      backgroundColor: Color.fromRGBO(244, 230, 217, 1),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // logo
+            Row(
               children: [
-                // logo
-                Text("Let's create an account for you"),
-                const SizedBox(
-                  height: 10,
+                SizedBox(
+                  width: 30,
                 ),
-          
-                // Adding profile image
-                Stack(
-                  children: [
-                    _image != null ?
-                      CircleAvatar(
-                        radius: 100,
-                        backgroundImage: MemoryImage(_image!),
-                      ):
-                      CircleAvatar(
-                        radius: 100,
-                        child: Icon(Icons.person, size: 70),
-                      ),
-                    Positioned(
-                      child: IconButton(
-                        icon: Icon(Icons.add_a_photo,),
-                        onPressed: selectImage,
-                      ),
-                      bottom: -10,
-                      left: 150,
-                    )
-                  ],
-                  
-                ),
-          
-                const SizedBox(
-                  height: 25,
-                ),
-
-                //email textfield
-                MytextField(
-                  hintText: "Username",
-                  obscureText: false,
-                  controller: _usernameController,
-                ),
-          
-                const SizedBox(
-                  height: 10,
-                ),
-          
-                //email textfield
-                MytextField(
-                  hintText: "Email",
-                  obscureText: false,
-                  controller: _emailController,
-                ),
-          
-                const SizedBox(
-                  height: 10,
-                ),
-          
-                //pw textfield
-                MytextField(
-                  hintText: "Password",
-                  obscureText: true,
-                  controller: _passwordController,
-                ),
-          
-                const SizedBox(
-                  height: 10,
-                ),
-          
-                //confirmpw textfield
-                MytextField(
-                  hintText: "Confirm password",
-                  obscureText: true,
-                  controller: _confirmpasswordController,
-                ),
-          
-                const SizedBox(
-                  height: 25,
-                ),
-          
-                //login button
-                MyButton(
-                  text: "Register",
-                  onTap: () => register(context),
-                ),
-          
-                const SizedBox(
-                  height: 25,
-                ),
-          
-                //register now
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("Already have an account? "),
-                    GestureDetector(
-                      onTap: widget.onTap,
-                      child: Text(
-                        "Login now",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ],
-                )
+                text("Let's create an account for you", Colors.black, 14),
               ],
             ),
-          ),
+
+            const SizedBox(
+              height: 10,
+            ),
+
+            //email textfield
+            MytextField(
+              hintText: "Email",
+              obscureText: false,
+              controller: _emailController,
+              color: Colors.white,
+            ),
+
+            const SizedBox(
+              height: 10,
+            ),
+
+            //pw textfield
+            MytextField(
+              hintText: "Password",
+              obscureText: true,
+              controller: _passwordController,
+              color: Colors.white,
+            ),
+
+            const SizedBox(
+              height: 10,
+            ),
+
+            //confirmpw textfield
+            MytextField(
+              hintText: "Confirm password",
+              obscureText: true,
+              controller: _confirmpasswordController,
+              color: Colors.white,
+            ),
+
+            const SizedBox(
+              height: 25,
+            ),
+
+            //login button
+            MyButton(
+              text: text("Register", Colors.white, 16),
+              onTap: () => register(context),
+              color: Color.fromRGBO(164, 151, 134, 1),
+              w: 310,
+              h: 70,
+            ),
+
+            const SizedBox(
+              height: 25,
+            ),
+
+            //register now
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("Already have an account? "),
+                GestureDetector(
+                  onTap: widget.onTap,
+                  child: Text(
+                    "Login now",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
