@@ -4,8 +4,10 @@ import 'package:demo_chat/components/widget.dart';
 import 'package:demo_chat/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 
-class ProfilePage extends StatelessWidget{
-  ProfilePage({super.key,});
+class ProfilePage extends StatelessWidget {
+  ProfilePage({
+    super.key,
+  });
 
   //auth service & firestore
   final AuthService _authService = AuthService();
@@ -25,14 +27,19 @@ class ProfilePage extends StatelessWidget{
       body: Center(
         child: Column(
           children: [
+            SizedBox(
+              height: 30,
+            ),
             FutureBuilder(
-              future: _firestore
-                .collection("Users").doc(_authService.getCurrentUser()!.uid).get(),
-              builder: (context, snapshot){
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
-                } else {
-                  final data = snapshot.data!.data()!;
+                future: _firestore
+                    .collection("Users")
+                    .doc(_authService.getCurrentUser()!.uid)
+                    .get(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  } else {
+                    final data = snapshot.data!.data()!;
                     return Column(
                       children: [
                         // profile image
@@ -46,8 +53,7 @@ class ProfilePage extends StatelessWidget{
                         ),
 
                         // username
-                        text(data["username"], Colors.black,16),
-
+                        text(data["username"], Colors.black, 16),
 
                         const SizedBox(
                           height: 25,
@@ -63,15 +69,11 @@ class ProfilePage extends StatelessWidget{
                         ),
                       ],
                     );
-                }
-                
-              }
-            ),
-            
+                  }
+                }),
           ],
         ),
       ),
     );
   }
-  
 }
