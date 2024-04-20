@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:demo_chat/components/chat_bubble.dart';
 import 'package:demo_chat/components/my_textfield.dart';
+import 'package:demo_chat/pages/createevent_page.dart';
+import 'package:demo_chat/pages/userlist_page.dart';
 import 'package:demo_chat/services/auth/auth_service.dart';
 import 'package:demo_chat/services/chat/chat_service.dart';
 import 'package:flutter/material.dart';
@@ -100,17 +102,43 @@ class _ChatPageState extends State<ChatPage> {
     scrollDown();
   }
 
+  void toCreatEventPage(BuildContext context) {
+    // go to profile page
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => CreateEventPage(gid : widget.gid),
+        )
+    );
+  }
+
+  void toUserListPage(BuildContext context) {
+    // go to profile page
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => UserListPage(gid: widget.gid,),
+        )
+    );
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.groupName),
         backgroundColor: Colors.transparent,
-        foregroundColor: Colors.grey,
+        // foregroundColor: Colors.grey,
         elevation: 0,
 
         // actions
-        actions: [IconButton(onPressed: showGroupID, icon: Icon(Icons.logout)),],
+        actions: [
+          IconButton(onPressed: showGroupID, icon: Icon(Icons.info_outline)),
+          IconButton(onPressed: () => toCreatEventPage(context), icon: Icon(Icons.event)),
+          IconButton(onPressed: () => toUserListPage(context), icon: Icon(Icons.list)),
+        ],
       ),
       body: Column(
         children: [

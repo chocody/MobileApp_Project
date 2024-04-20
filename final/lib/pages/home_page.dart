@@ -1,7 +1,10 @@
 import "package:cloud_firestore/cloud_firestore.dart";
-import "package:demo_chat/components/user_tile.dart";
+import "package:demo_chat/components/group_tile.dart";
+import "package:demo_chat/components/popup_textfield.dart";
 import "package:demo_chat/pages/chat_page.dart";
-import "package:demo_chat/services/auth/auth_service.dart";
+import "package:demo_chat/pages/creategroup_page.dart";
+import "package:demo_chat/pages/eventlist_page.dart";
+import "package:demo_chat/pages/profile_page.dart";
 import "package:demo_chat/services/chat/chat_service.dart";
 import "package:flutter/material.dart";
 
@@ -13,36 +16,60 @@ class HomePage extends StatelessWidget{
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
 
-  void logout() {
-    //get auth service
-    final _auth = AuthService();
-    _auth.signOut();
+  void toProfilePage(BuildContext context) {
+    // go to profile page
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ProfilePage(),
+        )
+    );
   }
 
-  void addgroup(){
-    //get chat service
-    final ChatService _chat = ChatService();
-    _chat.addGroup();
+  void toCreateGroupPage(BuildContext context){
+    // go to create group page
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => CreateGroupPage(),
+        )
+    );
   }
+  void toEventListPage(BuildContext context){
+    // go to evenlist page
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => EventListPage(),
+        )
+    );
+  }
+
+  
   
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Home"),
-      backgroundColor: Colors.transparent,
-      foregroundColor: Colors.grey,
-      elevation: 0, 
-      actions: [
-        // logout button
-        IconButton(onPressed: logout, icon: Icon(Icons.logout)),
-        IconButton(onPressed: addgroup, icon: Icon(Icons.add))
-      ],
+      appBar: AppBar(
+        title: Text("Home"),
+        backgroundColor: Colors.transparent,
+        // foregroundColor: Colors.grey,
+        elevation: 0,
+        leading: IconButton(onPressed: () => toProfilePage(context), icon: Icon(Icons.person)),
+        actions: [
+          IconButton(onPressed: () =>toCreateGroupPage(context), icon: Icon(Icons.add)),
+          IconButton(onPressed: () => joingroup(context), icon: Icon(Icons.search)),
+          IconButton(onPressed: () =>toEventListPage(context), icon: Icon(Icons.event)),
+        ],
       ),
       body: _buildGroupList(),
     );
   }
+  
+  //
 
-  // build a list of users except for the current logged in user
+
+  // build a list of current user's groups 
   Widget _buildGroupList() {
     return StreamBuilder(
       stream: _chatService.getGroupsStream(),
@@ -81,10 +108,10 @@ class HomePage extends StatelessWidget{
         } else {
           final data = snapshot.data!.data()! as Map<String, dynamic>;
 
-          return UserTile(
+          return GroupTile(
             text: data["groupName"], 
             onTap: () {
-              // tapped on a user -> go to chat page
+              // tapped on a group -> go to chat page
               Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -92,7 +119,8 @@ class HomePage extends StatelessWidget{
                       groupName: data["groupName"],
                       gid: groupData["gid"],
                     ),
-                  ));
+                  )
+              );
             },
           );
         }

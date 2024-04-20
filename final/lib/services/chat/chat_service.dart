@@ -1,14 +1,18 @@
 
 
+import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:demo_chat/models/message.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class ChatService {
 
-  //get instance of auth & firestore
+  //get instance of auth & firestore & storage
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseStorage _storage = FirebaseStorage.instance;
 
   //get user stream
   /*
@@ -42,10 +46,22 @@ class ChatService {
   Stream<List<Map<String,dynamic>>> getGroupsStream(){
     return _firestore.collection("user_group").where("uid", isEqualTo: _auth.currentUser!.uid).snapshots().map((snapshot){
       return snapshot.docs.map((doc){
-        // go thought each individual user
+        // go thought each individual group
         final group = doc.data();
-        // return user
+        // return group
         return group;
+      }).toList();
+    });
+  }
+
+  //get users in group 
+  Stream<List<Map<String,dynamic>>> getUserInGroupStream(String gid){
+    return _firestore.collection("user_group").where("gid", isEqualTo: gid).snapshots().map((snapshot){
+      return snapshot.docs.map((doc){
+        // go thought each individual user
+        final user = doc.data();
+        // return user
+        return user;
       }).toList();
     });
   }
@@ -87,27 +103,60 @@ class ChatService {
   }
 
   //add new group
-  Future<void> addGroup() async{
-    final groupInfo = {
-      "groupName": "a",
-      "creator" : _auth.currentUser!.uid,
-    };
-    final addedGroup = await _firestore.collection("groups").add(groupInfo);
+  Future<void> addGroup(String groupName, String description, Uint8List file) async{
+    
+    //upload Image
+    var imageName = DateTime.now().millisecondsSinceEpoch.toString();
+    Reference ref = _storage.ref().child('group_images/$imageName.jpg');
+    UploadTask _uploadTask = ref.putData(file);
+    TaskSnapshot snapshot = await _uploadTask;
+    String imgUrl = await snapshot.ref.getDownloadURL();
 
+    //add group infomation
+    final groupInfo = {
+      "groupName": groupName,
+      "description": description,
+      "creator" : _auth.currentUser!.uid,
+      "image":imgUrl,
+    };
+
+    final addedGroup = await _firestore.collection("groups").add(groupInfo);
+    
+    //add relation between group and current user
     final relation = {
       "gid": addedGroup.id,
       "uid" : _auth.currentUser!.uid,
     };
-    await _firestore.collection("user_group").doc().set(relation);
+    await _firestore.collection("user_group").doc(addedGroup.id + _auth.currentUser!.uid).set(relation);
   }
 
   //join group
   Future<void> joinGroup(groupID) async{
-    final relation = {
-      "gid": groupID,
-      "uid" : _auth.currentUser!.uid,
-    };
-    await _firestore.collection("user_group").doc().set(relation);
+    final uid = _auth.currentUser!.uid;
+
+    // check group exist
+    final groupExistence = await _firestore
+      .collection("groups")
+      .doc(groupID)
+      .get().then((value) => value.exists,);
+  
+    if (groupExistence){
+
+      // check relation dont exist
+      final relationExistence = await _firestore
+        .collection("user_group")
+        .doc(groupID+uid)
+        .get().then((value) => value.exists,
+      );
+      if (! relationExistence) {
+        final relation = {
+          "gid": groupID,
+          "uid" : uid,
+        };
+        await _firestore.collection("user_group").doc(groupID+uid).set(relation); 
+      }
+    }
+    
   }
 
 }

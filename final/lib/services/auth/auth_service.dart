@@ -1,11 +1,15 @@
+import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class AuthService {
   
-  // instance of auth & firestore
+  // instance of auth & firestore & storage
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseStorage _storage = FirebaseStorage.instance;
 
   // get current user
   User? getCurrentUser() {
@@ -13,20 +17,12 @@ class AuthService {
   }
   
   // sign in
-  Future<UserCredential> signInWithEmailPassword(String email, password) async{
+  Future<UserCredential> signInWithEmailPassword(String email,String password) async{
     try{
       // sign user in
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
         email: email, 
         password: password,
-      );
-
-      // save user info if it doesn't already exist
-      _firestore.collection("Users").doc(userCredential.user!.uid).set(
-        {
-          "uid": userCredential.user!.uid,
-          "email" : email,
-        }
       );
 
       return userCredential;
@@ -36,19 +32,28 @@ class AuthService {
   }
 
   // sign up
-  Future<UserCredential> signUpWithEmailAndPassword(String email, password) async {
+  Future<UserCredential> signUpWithEmailAndPassword(String email,String password,String username,Uint8List file) async {
     try {
       // create user
       UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
         email: email, 
         password: password
         );
-      
+
+      //upload Image
+      var imageName = DateTime.now().millisecondsSinceEpoch.toString();
+      Reference ref = _storage.ref().child('profile_images/$imageName.jpg');
+      UploadTask _uploadTask = ref.putData(file);
+      TaskSnapshot snapshot = await _uploadTask;
+      String imgUrl = await snapshot.ref.getDownloadURL();
+
       // save user info in a seperate doc
-      _firestore.collection("Users").doc(userCredential.user!.uid).set(
+      await _firestore.collection("Users").doc(userCredential.user!.uid).set(
         {
           "uid": userCredential.user!.uid,
           "email" : email,
+          "username": username,
+          "image" : imgUrl
         }
       );
       
@@ -57,6 +62,7 @@ class AuthService {
       throw Exception(e.code);
     }
   }
+
 
   // sign out
   Future<void> signOut() async {

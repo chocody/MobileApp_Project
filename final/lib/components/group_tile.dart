@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class UserTile extends StatelessWidget {
+class GroupTile extends StatelessWidget {
   final String text;
   final void Function()? onTap;
-  const UserTile({
+  const GroupTile({
     super.key,
     required this.text,
     required this.onTap,
