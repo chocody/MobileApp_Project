@@ -103,7 +103,7 @@ class ChatService {
   }
 
   //add new group
-  Future<void> addGroup(String groupName, String description, Uint8List file) async{
+  Future<void> addGroup(String groupName, String description, Uint8List file,address, double latitude, double longitude) async{
     
     //upload Image
     var imageName = DateTime.now().millisecondsSinceEpoch.toString();
@@ -118,6 +118,9 @@ class ChatService {
       "description": description,
       "creator" : _auth.currentUser!.uid,
       "image":imgUrl,
+      "Address": address,
+      "Latitude": latitude,
+      "Longtitude": longitude,
     };
 
     final addedGroup = await _firestore.collection("groups").add(groupInfo);
@@ -153,7 +156,7 @@ class ChatService {
           "gid": groupID,
           "uid" : uid,
         };
-        await _firestore.collection("user_group").doc(groupID+uid).set(relation); 
+        await _firestore.collection("user_group").doc(groupID+uid).set(relation);
       }
     }
     

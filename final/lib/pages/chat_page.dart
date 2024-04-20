@@ -203,7 +203,7 @@ class _ChatPageState extends State<ChatPage> {
       child: Row(
         children: [
           // text field should take up most of the space
-          Expanded(child: 
+          Expanded(child:
             MytextField(
               hintText: "Type a message",
               obscureText: false,

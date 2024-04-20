@@ -7,8 +7,6 @@
 // import 'package:flutter/widgets.dart';
 // import 'package:image_picker/image_picker.dart';
 
-
-
 // class CreateGroupPage extends StatefulWidget {
 //   const CreateGroupPage({super.key});
 
@@ -33,7 +31,6 @@
 //     }
 //   }
 
-
 //   // select Image
 //   void selectImage() async{
 //     Uint8List img = await pickImage(ImageSource.gallery);
@@ -49,8 +46,6 @@
 //     _chat.addGroup(_groupNameController.text,_descriptionController.text,_image!);
 //     Navigator.pop(context);
 //   }
-  
-
 
 //   @override
 //   Widget build(BuildContext context) {
@@ -67,7 +62,7 @@
 //               //Add image
 //               GestureDetector(
 //                 child: Container(
-//                   width: 400, 
+//                   width: 400,
 //                   height: 250,
 //                   decoration: BoxDecoration(
 //                     borderRadius: BorderRadius.circular(10),
@@ -77,11 +72,11 @@
 //                 ),
 //                 onTap: selectImage,
 //               ),
-          
+
 //               SizedBox(
 //                 height: 25,
 //               ),
-        
+
 //               //Add group name
 //               Text("Group Name :"),
 //               TextFormField(
@@ -90,11 +85,11 @@
 //                 ),
 //                 controller: _groupNameController,
 //               ),
-          
+
 //               SizedBox(
 //                 height: 10,
 //               ),
-        
+
 //               //Add description
 //               Text("Description :"),
 //               TextFormField(
@@ -124,10 +119,10 @@
 //   }
 // }
 
-import 'dart:io';
+import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:demo_chat/components/widget.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:demo_chat/services/chat/chat_service.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -136,6 +131,9 @@ import 'package:image_picker/image_picker.dart';
 class CreateGroupPage extends StatefulWidget {
   @override
   State<CreateGroupPage> createState() => _GroupCreatePageState();
+}
+
+class _groupNameController {
 }
 
 class _GroupCreatePageState extends State<CreateGroupPage> {
@@ -147,9 +145,31 @@ class _GroupCreatePageState extends State<CreateGroupPage> {
   late LocationPermission permission;
 
   final firestore = FirebaseFirestore.instance;
-  File? _image;
-
   String _currentAddress = "";
+  Uint8List? _image;
+
+  pickImage(ImageSource source) async {
+    final ImagePicker _imagePicker = ImagePicker();
+    XFile? _file = await _imagePicker.pickImage(source: source);
+    if(_file != null){
+      return await _file.readAsBytes();
+    }
+  }
+
+  // select Image
+  void selectImage() async{
+    Uint8List img = await pickImage(ImageSource.gallery);
+    setState(() {
+      _image = img ;
+    });
+  }
+
+    void createGroup(BuildContext context) {
+    //get chat service
+    final ChatService _chat = ChatService();
+    _chat.addGroup(groupnameController.text,descriptionController.text,_image!,"${_currentAddress}",_currentLocation!.latitude,_currentLocation!.longitude);
+    Navigator.pop(context);
+  }
 
   Future<Position> _getCurrentLocation() async {
     servicePermission = await Geolocator.isLocationServiceEnabled();
@@ -212,30 +232,10 @@ class _GroupCreatePageState extends State<CreateGroupPage> {
                       Expanded(
                         child: Center(
                           child:
-                              _image == null ? Text("") : Image.file(_image!),
+                          _image != null ? Image.memory(_image!): IconButton(icon: Icon(Icons.image_outlined),onPressed: () => {selectImage()},iconSize: 60,),
                         ),
                       ),
                     ],
-                  ),
-                  Positioned(
-                    top: (60),
-                    left: (120),
-                    child: Visibility(
-                      visible:
-                          _image == null, // Button visible only when no image
-                      child: IconButton(
-                        icon: Icon(Icons.image_outlined),
-                        onPressed: () async {
-                          final image = await ImagePicker()
-                              .pickImage(source: ImageSource.gallery);
-                          if (image != null) {
-                            setState(() {
-                              _image = File(image.path);
-                            });
-                          }
-                        },
-                      ),
-                    ),
                   ),
                 ],
               ),
@@ -329,29 +329,7 @@ class _GroupCreatePageState extends State<CreateGroupPage> {
                 width: 240,
               ),
               ElevatedButton(
-                onPressed: () async {
-                  // var imageName =
-                  //     DateTime.now().millisecondsSinceEpoch.toString();
-                  // var storageRef = FirebaseStorage.instance
-                  //     .ref()
-                  //     .child('coverpage/$imageName.jpg');
-                  // var uploadTask = storageRef.putFile(_image!);
-                  // var downloadUrl =
-                  //     await (await uploadTask).ref.getDownloadURL();
-
-                  // firestore.collection("Group Detail").add({
-                  //   "Group name": groupnameController.text,
-                  //   "Description": descriptionController.text,
-                  //   "Address": "${_currentAddress}",
-                  //   "Latitude": _currentLocation!.latitude,
-                  //   "Longtitude": _currentLocation!.longitude,
-                  //   "Image": downloadUrl.toString(),
-                  //   "Users": [],
-                  // });
-                  // Navigator.of(context).pop();
-                  // groupnameController.clear();
-                  // descriptionController.clear();
-                },
+                onPressed: () => createGroup(context),
                 child: const Text(
                   "Create",
                   style: TextStyle(

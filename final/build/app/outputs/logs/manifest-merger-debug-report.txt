@@ -66,6 +66,7 @@ MERGED from [:firebase_core] C:\Users\chgun\OneDrive\Documents\GitHub\MobileApp_
 MERGED from [:geolocator_android] C:\Users\chgun\OneDrive\Documents\GitHub\MobileApp_Project\final\build\geolocator_android\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-17:12
 MERGED from [:image_picker_android] C:\Users\chgun\OneDrive\Documents\GitHub\MobileApp_Project\final\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-36:12
 MERGED from [:flutter_plugin_android_lifecycle] C:\Users\chgun\OneDrive\Documents\GitHub\MobileApp_Project\final\build\flutter_plugin_android_lifecycle\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
+MERGED from [:geocoding_android] C:\Users\chgun\OneDrive\Documents\GitHub\MobileApp_Project\final\build\geocoding_android\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [com.google.firebase:firebase-auth:22.3.1] C:\Users\chgun\.gradle\caches\transforms-3\e9e8ecfd3090256959bb692ad29c80b1\transformed\jetified-firebase-auth-22.3.1\AndroidManifest.xml:17:1-75:12
 MERGED from [com.google.firebase:firebase-firestore:24.11.0] C:\Users\chgun\.gradle\caches\transforms-3\52ec130332287cc38e999865e5e01dfd\transformed\jetified-firebase-firestore-24.11.0\AndroidManifest.xml:2:1-26:12
 MERGED from [com.google.firebase:firebase-storage:20.3.0] C:\Users\chgun\.gradle\caches\transforms-3\223443850e77032a5524e96af46cb2fe\transformed\jetified-firebase-storage-20.3.0\AndroidManifest.xml:15:1-39:12
@@ -166,6 +167,8 @@ MERGED from [:image_picker_android] C:\Users\chgun\OneDrive\Documents\GitHub\Mob
 MERGED from [:image_picker_android] C:\Users\chgun\OneDrive\Documents\GitHub\MobileApp_Project\final\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:6:5-8:41
 MERGED from [:flutter_plugin_android_lifecycle] C:\Users\chgun\OneDrive\Documents\GitHub\MobileApp_Project\final\build\flutter_plugin_android_lifecycle\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:flutter_plugin_android_lifecycle] C:\Users\chgun\OneDrive\Documents\GitHub\MobileApp_Project\final\build\flutter_plugin_android_lifecycle\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
+MERGED from [:geocoding_android] C:\Users\chgun\OneDrive\Documents\GitHub\MobileApp_Project\final\build\geocoding_android\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
+MERGED from [:geocoding_android] C:\Users\chgun\OneDrive\Documents\GitHub\MobileApp_Project\final\build\geocoding_android\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [com.google.firebase:firebase-auth:22.3.1] C:\Users\chgun\.gradle\caches\transforms-3\e9e8ecfd3090256959bb692ad29c80b1\transformed\jetified-firebase-auth-22.3.1\AndroidManifest.xml:21:5-23:64
 MERGED from [com.google.firebase:firebase-auth:22.3.1] C:\Users\chgun\.gradle\caches\transforms-3\e9e8ecfd3090256959bb692ad29c80b1\transformed\jetified-firebase-auth-22.3.1\AndroidManifest.xml:21:5-23:64
 MERGED from [com.google.firebase:firebase-firestore:24.11.0] C:\Users\chgun\.gradle\caches\transforms-3\52ec130332287cc38e999865e5e01dfd\transformed\jetified-firebase-firestore-24.11.0\AndroidManifest.xml:6:5-44

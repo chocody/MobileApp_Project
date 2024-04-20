@@ -44,28 +44,30 @@ class _EventPageState extends State<EventPage> {
       appBar: nav_bar(context),
       body: StreamBuilder(
           stream:
-              FirebaseFirestore.instance.collection("Event Detail").snapshots(),
+              FirebaseFirestore.instance.collection("events").snapshots(),
           builder: (context, snapshot) {
             int count = 0;
             return ListView.builder(
               scrollDirection: Axis.vertical,
               itemCount: snapshot.data?.docs.length,
               itemBuilder: (context, index) {
-                print(snapshot.data?.docs[index]["Event name"]);
-                print(snapshot.data?.docs[index]["Date"]);
-                print(snapshot.data?.docs[index]["Time"]);
-                print(snapshot.data?.docs[index]["Detail"]);
+                print(snapshot.data?.docs[index]["eventName"]);
+                print(snapshot.data?.docs[index]["date"]);
+                print(snapshot.data?.docs[index]["time"]);
+                print(snapshot.data?.docs[index]["description"]);
                 print("------------------------------------------------");
                 String event_name =
-                    (snapshot.data?.docs[index]["Event name"]).toString();
+                    (snapshot.data?.docs[index]["eventName"]).toString();
                 String event_time =
-                    (snapshot.data?.docs[index]["Time"]).toString();
+                    (snapshot.data?.docs[index]["time"]).toString();
                 String event_date =
-                    (snapshot.data?.docs[index]["Date"]).toString();
+                    (snapshot.data?.docs[index]["date"]).toString();
+                String event_image =
+                    (snapshot.data?.docs[index]["image"]).toString();
                 count += 1;
                 print(count);
                 return banner_event(
-                    false, event_name, event_time, event_date, count, context);
+                    false, event_name, event_time, event_date, count,event_image, context);
               },
             );
           }),
