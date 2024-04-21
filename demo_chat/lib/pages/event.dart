@@ -20,6 +20,7 @@ class _EventPageState extends State<EventPage> {
   void initState() {
     super.initState();
     _getCurrentLocation();
+    getlocation();
   }
 
   Future<Position> _getCurrentLocation() async {
@@ -35,6 +36,14 @@ class _EventPageState extends State<EventPage> {
     }
 
     return await Geolocator.getCurrentPosition();
+  }
+
+  void getlocation() async {
+    currentLocation = await _getCurrentLocation();
+    print("${currentLocation}");
+    print(currentLocation?.longitude);
+    print(currentLocation?.latitude);
+    // print("${_currentAddress}");
   }
 
   Widget build(BuildContext context) {

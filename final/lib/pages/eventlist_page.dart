@@ -4,7 +4,6 @@ import 'package:demo_chat/components/widget.dart';
 import 'package:demo_chat/pages/eventinfo_page.dart';
 import 'package:demo_chat/services/event_service.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 
 // class EventPage extends StatefulWidget {
 //   @override

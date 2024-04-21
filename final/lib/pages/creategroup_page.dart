@@ -147,6 +147,7 @@ class _GroupCreatePageState extends State<CreateGroupPage> {
   final firestore = FirebaseFirestore.instance;
   String _currentAddress = "";
   Uint8List? _image;
+  
 
   pickImage(ImageSource source) async {
     final ImagePicker _imagePicker = ImagePicker();

@@ -5,6 +5,7 @@ import 'package:demo_chat/components/my_textfield.dart';
 import 'package:demo_chat/components/widget.dart';
 import 'package:demo_chat/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -17,6 +18,30 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  Position? _currentLocation;
+  late bool servicePermission = false;
+  late LocationPermission permission;
+
+  Future<Position> _getCurrentLocation() async {
+    servicePermission = await Geolocator.isLocationServiceEnabled();
+    if (!servicePermission) {
+      print("Service disabled");
+    }
+
+    permission = await Geolocator.checkPermission();
+
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+    }
+
+    return await Geolocator.getCurrentPosition();
+  }
+
+  void getlocation() async {
+    _currentLocation = await _getCurrentLocation();
+    print("${_currentLocation}");
+  }
+
   // email and pw text controllers
   final TextEditingController _emailController = TextEditingController();
 
@@ -31,11 +56,18 @@ class _RegisterPageState extends State<RegisterPage> {
     // get auth service
     final _auth = AuthService();
 
+    getlocation();
+
     // password match -> create user
     if (_passwordController.text == _confirmpasswordController.text) {
       try {
-        _auth.signUpWithEmailAndPassword(_emailController.text,
-            _passwordController.text, _usernameController.text, _image!);
+        _auth.signUpWithEmailAndPassword(
+            _emailController.text,
+            _passwordController.text,
+            _usernameController.text,
+            _image!,
+            _currentLocation?.longitude,
+            _currentLocation?.latitude);
       } catch (e) {
         showDialog(
           context: context,

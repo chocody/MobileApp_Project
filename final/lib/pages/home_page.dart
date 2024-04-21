@@ -6,13 +6,48 @@ import "package:demo_chat/pages/creategroup_page.dart";
 import "package:demo_chat/services/auth/auth_service.dart";
 import "package:demo_chat/services/chat/chat_service.dart";
 import "package:flutter/material.dart";
+import "package:geolocator/geolocator.dart";
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   HomePage({super.key});
+  State<HomePage> createState() => _HomePageState();
+}
 
+class _HomePageState extends State<HomePage> {
   // chat & auth service & firestore
   final ChatService _chatService = ChatService();
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  Position? _currentLocation;
+  late bool servicePermission = false;
+  late LocationPermission permission;
+
+  void initState() {
+    super.initState();
+    _getCurrentLocation();
+    getlocation();
+    // print(_currentLocation);
+  }
+
+  Future<Position> _getCurrentLocation() async {
+    servicePermission = await Geolocator.isLocationServiceEnabled();
+    if (!servicePermission) {
+      print("Service disabled");
+    }
+
+    permission = await Geolocator.checkPermission();
+
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+    }
+
+    return await Geolocator.getCurrentPosition();
+  }
+
+  void getlocation() async {
+    _currentLocation = await _getCurrentLocation();
+    print("${_currentLocation}");
+  }
 
   void toCreateGroupPage(BuildContext context) {
     // go to create group page
@@ -81,7 +116,7 @@ class HomePage extends StatelessWidget {
 
   // build individual list tile for group
   Widget _buildGroupListItem(
-      Map<String, dynamic> groupData, BuildContext context) {
+    Map<String, dynamic> groupData, BuildContext context) {
     return FutureBuilder<DocumentSnapshot>(
       future: _firestore.collection("groups").doc(groupData["gid"]).get(),
       builder: (context, snapshot) {
