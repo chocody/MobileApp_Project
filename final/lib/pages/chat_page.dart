@@ -14,7 +14,7 @@ class ChatPage extends StatefulWidget {
   final double g_latitude;
   final double g_longtitude;
 
-  ChatPage({
+  ChatPage(void getlocation, {
     super.key,
     required this.groupName,
     required this.gid,

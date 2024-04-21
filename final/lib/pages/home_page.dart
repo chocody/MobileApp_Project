@@ -46,9 +46,7 @@ class _HomePageState extends State<HomePage> {
   void getlocation() async {
     _currentLocation = await _getCurrentLocation();
     print("${_currentLocation}");
-
-    AuthService()
-        .updateLocate(_currentLocation?.latitude, _currentLocation?.longitude);
+    AuthService().updateLocate(_currentLocation?.latitude, _currentLocation?.longitude);
   }
 
   void toCreateGroupPage(BuildContext context) {
@@ -156,6 +154,7 @@ class _HomePageState extends State<HomePage> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => ChatPage(
+                      getlocation(),
                       groupName: data["groupName"],
                       gid: groupData["gid"],
                       g_latitude: data["Latitude"],
