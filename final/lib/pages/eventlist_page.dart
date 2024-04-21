@@ -86,7 +86,7 @@ class EventListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: nav_bar(context),
+      appBar: page_bar("Event List", context),
       body: _buildEventList(context),
       backgroundColor: Color.fromRGBO(244, 230, 217, 1),
     );
@@ -134,6 +134,7 @@ class EventListPage extends StatelessWidget {
             event_date: data["date"],
             event_time: data["time"],
             event_img: data["image"],
+            event_status: eventData["joined"],
             onTap: () {
               // tapped on a group -> go to eventinfo page
               Navigator.push(
@@ -141,6 +142,7 @@ class EventListPage extends StatelessWidget {
                   MaterialPageRoute(
                     builder: (context) => EventInfoPage(
                       eid: eventData["eid"],
+                      joined: eventData["joined"],
                     ),
                   )
               );

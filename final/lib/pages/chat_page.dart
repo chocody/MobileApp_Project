@@ -11,11 +11,15 @@ import 'package:flutter/material.dart';
 class ChatPage extends StatefulWidget {
   final String groupName;
   final String gid;
+  final double g_latitude;
+  final double g_longtitude;
 
   ChatPage({
     super.key,
     required this.groupName,
     required this.gid,
+    required this.g_latitude,
+    required this.g_longtitude,
   });
 
   @override
@@ -111,6 +115,8 @@ class _ChatPageState extends State<ChatPage> {
         MaterialPageRoute(
           builder: (context) => UserListPage(
             gid: widget.gid,
+            g_latitude: widget.g_latitude,
+            g_longtitude: widget.g_longtitude,
           ),
         ));
   }
@@ -129,8 +135,7 @@ class _ChatPageState extends State<ChatPage> {
           ],
         ),
         actions: [
-          IconButton(
-              onPressed: showGroupID, icon: Icon(Icons.info_outline)),
+          IconButton(onPressed: showGroupID, icon: Icon(Icons.info_outline)),
           IconButton(
               onPressed: () => toCreatEventPage(context),
               icon: Icon(Icons.event)),
@@ -214,7 +219,7 @@ class _ChatPageState extends State<ChatPage> {
           )),
           //send button
           IconButton(
-                onPressed: sendMessage, icon: const Icon(Icons.arrow_upward)),
+              onPressed: sendMessage, icon: const Icon(Icons.arrow_upward)),
           SizedBox(
             width: 20,
           ),

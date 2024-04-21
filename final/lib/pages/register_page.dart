@@ -57,6 +57,7 @@ class _RegisterPageState extends State<RegisterPage> {
     final _auth = AuthService();
 
     getlocation();
+    print(_currentLocation);
 
     // password match -> create user
     if (_passwordController.text == _confirmpasswordController.text) {
@@ -118,7 +119,7 @@ class _RegisterPageState extends State<RegisterPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
-                height: 30,
+                height: 60,
               ),
               Container(
                 width: 180.0, // Adjust width to maintain aspect ratio
@@ -133,18 +134,21 @@ class _RegisterPageState extends State<RegisterPage> {
                       Column(
                         children: [
                           Expanded(
-                            child: Center(
-                              child: _image != null
-                                  ? ClipOval(
-                                      // Clip the image to a circle shape
-                                      child: Image.memory(_image!,
-                                          fit: BoxFit.fill),
-                                    )
-                                  : IconButton(
-                                      icon: Icon(Icons.image_outlined),
-                                      onPressed: () => {selectImage()},
-                                      iconSize: 30,
-                                    ),
+                            child: GestureDetector(
+                              onTap: selectImage,
+                              child: Center(
+                                child: _image != null
+                                    ? CircleAvatar(
+                                        radius: 100,
+                                        backgroundImage: MemoryImage(_image!),
+                                      )
+                                    : CircleAvatar(
+                                      backgroundColor: Colors.white,
+                                        radius: 100,
+                                        child:
+                                            Icon(Icons.image_outlined, size: 30,color: Colors.black,)
+                                      ),
+                              ),
                             ),
                           ),
                         ],

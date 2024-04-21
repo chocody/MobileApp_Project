@@ -31,6 +31,11 @@ class AuthService {
     }
   }
 
+  // update location
+  Future<void> updateLocate (latitude,longtitude) async {
+    await _firestore.collection("Users").doc(_auth.currentUser!.uid).update({"latitude": latitude,"longtitude":longtitude});
+  }
+
   // sign up
   Future<UserCredential> signUpWithEmailAndPassword(
       String email,
@@ -38,7 +43,8 @@ class AuthService {
       String username,
       Uint8List file,
       double? longtitude,
-      double? latitude) async {
+      double? latitude
+      ) async {
     try {
       // create user
       UserCredential userCredential = await _auth

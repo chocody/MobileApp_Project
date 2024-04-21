@@ -54,7 +54,7 @@ class ChatService {
     });
   }
 
-  //get users in group 
+  //get users in group
   Stream<List<Map<String,dynamic>>> getUserInGroupStream(String gid){
     return _firestore.collection("user_group").where("gid", isEqualTo: gid).snapshots().map((snapshot){
       return snapshot.docs.map((doc){
@@ -66,7 +66,12 @@ class ChatService {
     });
   }
 
-
+  // switch status
+  Future<void> switchStatus (String gid,bool state) async {
+    String ref = gid + _auth.currentUser!.uid;
+    await _firestore.collection("user_group").doc(ref).update({"enable": state});
+  }
+  
   //send message
   Future<void> sendMessage(String groupID, message) async {
     // get current user info
@@ -129,6 +134,7 @@ class ChatService {
     final relation = {
       "gid": addedGroup.id,
       "uid" : _auth.currentUser!.uid,
+      "enable": false,
     };
     await _firestore.collection("user_group").doc(addedGroup.id + _auth.currentUser!.uid).set(relation);
   }
@@ -155,6 +161,7 @@ class ChatService {
         final relation = {
           "gid": groupID,
           "uid" : uid,
+          "enable": false,
         };
         await _firestore.collection("user_group").doc(groupID+uid).set(relation);
       }

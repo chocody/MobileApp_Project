@@ -1,5 +1,6 @@
 import "package:cloud_firestore/cloud_firestore.dart";
 import "package:demo_chat/components/group_tile.dart";
+import "package:demo_chat/components/popup_textfield.dart";
 import "package:demo_chat/components/widget.dart";
 import "package:demo_chat/pages/chat_page.dart";
 import "package:demo_chat/pages/creategroup_page.dart";
@@ -24,9 +25,7 @@ class _HomePageState extends State<HomePage> {
 
   void initState() {
     super.initState();
-    _getCurrentLocation();
     getlocation();
-    // print(_currentLocation);
   }
 
   Future<Position> _getCurrentLocation() async {
@@ -47,6 +46,9 @@ class _HomePageState extends State<HomePage> {
   void getlocation() async {
     _currentLocation = await _getCurrentLocation();
     print("${_currentLocation}");
+
+    AuthService()
+        .updateLocate(_currentLocation?.latitude, _currentLocation?.longitude);
   }
 
   void toCreateGroupPage(BuildContext context) {
@@ -59,16 +61,30 @@ class _HomePageState extends State<HomePage> {
   }
 
   void logout() {
-  //get auth service
-  final _auth = AuthService();
-  _auth.signOut();
-}
+    //get auth service
+    final _auth = AuthService();
+    _auth.signOut();
+  }
 
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: nav_bar(context),
+      appBar: AppBar(
+        toolbarHeight: 60,
+        backgroundColor: const Color.fromRGBO(164, 151, 134, 1),
+        leading: IconButton(
+            onPressed: () => toProfilePage(context), icon: Icon(Icons.person)),
+        actions: [
+          IconButton(
+              onPressed: () => joingroup(context),
+              icon: const Icon(Icons.search)),
+          Container(
+              width: 1, color: const Color.fromRGBO(45, 61, 88, 1), height: 20),
+          IconButton(
+              onPressed: () => toEventListPage(context),
+              icon: const Icon(Icons.notifications)),
+        ],
+      ),
       backgroundColor: Color.fromRGBO(244, 230, 217, 1),
       body: _buildGroupList(),
       floatingActionButton: ElevatedButton(
@@ -116,7 +132,7 @@ class _HomePageState extends State<HomePage> {
 
   // build individual list tile for group
   Widget _buildGroupListItem(
-    Map<String, dynamic> groupData, BuildContext context) {
+      Map<String, dynamic> groupData, BuildContext context) {
     return FutureBuilder<DocumentSnapshot>(
       future: _firestore.collection("groups").doc(groupData["gid"]).get(),
       builder: (context, snapshot) {
@@ -132,6 +148,8 @@ class _HomePageState extends State<HomePage> {
             event_name: data["groupName"],
             event_description: data["description"],
             event_image: data["image"],
+            gid: groupData["gid"],
+            switchstate: groupData["enable"],
             onTap: () {
               // tapped on a group -> go to chat page
               Navigator.push(
@@ -140,6 +158,8 @@ class _HomePageState extends State<HomePage> {
                     builder: (context) => ChatPage(
                       groupName: data["groupName"],
                       gid: groupData["gid"],
+                      g_latitude: data["Latitude"],
+                      g_longtitude: data["Longtitude"],
                     ),
                   ));
             },
