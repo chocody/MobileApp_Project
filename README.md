@@ -1,3 +1,5 @@
+Clone repository
+
 Add all dependencie
 
 import 'package:flutter/material.dart';
